@@ -1,4 +1,12 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: Ov23liIaPiG8MZq4Z7XB
+            clientSecret: acfa5792780e9981c16f74d47b51d82af0aeb10a
+
   datasource:
     url: jdbc:hsqldb:mem:testdb;DB_CLOSE_DELAY=-1
     username: sa

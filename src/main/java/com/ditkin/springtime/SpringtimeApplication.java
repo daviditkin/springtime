@@ -6,9 +6,12 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,12 +37,18 @@ public class SpringtimeApplication {
     }
 
     @RequestMapping("/")
-    public String index() {
+    public String index(@AuthenticationPrincipal OidcUser principal) {
+        if (principal != null) {
+            return "Hello, " + principal.getFullName();
+        }
         return "Hello World";
     }
 
     @RequestMapping("/users")
-    public List<String> getUserNames() {
+    public List<String> getUserNames(@AuthenticationPrincipal OidcUser principal) {
+        if (principal != null) {
+            return Collections.singletonList("foo");
+        }
         return userRepo.findAll().stream().map(User::getName).collect(Collectors.toList());
     }
 
