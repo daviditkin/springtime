@@ -21,8 +21,6 @@ import java.util.stream.StreamSupport;
 @SpringBootApplication
 public class SpringtimeApplication {
 
-    private final UserRepository userRepo;
-
 
     @PostConstruct
     public void init() {
@@ -32,7 +30,7 @@ public class SpringtimeApplication {
         System.out.println("Test user created successfully");
     }
 
-    SpringtimeApplication(UserRepository userRepo) {
+    SpringtimeApplication() {
         this.userRepo = userRepo;
     }
 
@@ -42,14 +40,6 @@ public class SpringtimeApplication {
             return "Hello, " + principal.getFullName();
         }
         return "Hello World";
-    }
-
-    @RequestMapping("/users")
-    public List<String> getUserNames(@AuthenticationPrincipal OidcUser principal) {
-        if (principal != null) {
-            return Collections.singletonList("foo");
-        }
-        return userRepo.findAll().stream().map(User::getName).collect(Collectors.toList());
     }
 
     public static void main(String[] args) {

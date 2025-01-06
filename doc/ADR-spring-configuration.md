@@ -21,3 +21,5 @@ Hybrid
 Use java-based configuration in separate top-level classes.
 Profile based for different environments
 Externalize all secrete / environment specific properties
+
+Profiles
