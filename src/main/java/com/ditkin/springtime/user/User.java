@@ -3,12 +3,13 @@ package com.ditkin.springtime.user;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "the_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     public void setId(Long id) {

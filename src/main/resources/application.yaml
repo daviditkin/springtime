@@ -1,28 +1,21 @@
 spring:
   datasource:
-    # HSQL can run in memory (temporary) or file-based (persistent) mode
-    # For in-memory database:
     url: jdbc:hsqldb:mem:testdb;DB_CLOSE_DELAY=-1
-    # For file-based database:
-    # url: jdbc:hsqldb:file:./data/testdb;DB_CLOSE_DELAY=-1
     username: sa
     password:
     driver-class-name: org.hsqldb.jdbc.JDBCDriver
 
   jpa:
     hibernate:
-      # In development, you might want to use 'create-drop' to recreate the schema each time
-      # For production, 'update' is more appropriate
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.HSQLDialect
+        show_sql: true
         format_sql: true
-    show-sql: true
-    # Defers datasource initialization until after EntityManagerFactory is created
-    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.HSQLDialect
 
-  # Enables data.sql script execution
-  sql:
-    init:
-      mode: always
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
