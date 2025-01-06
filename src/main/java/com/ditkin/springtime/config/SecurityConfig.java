@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/", "/error", "/logout", "/webjars/**").permitAll()
-                        .requestMatchers("/users").authenticated()
+                        .requestMatchers("/api/v1/user/**").authenticated()
                 )
                 .oauth2Login(Customizer.withDefaults())
                 .logout(logout -> logout

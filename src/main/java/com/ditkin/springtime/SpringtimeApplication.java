@@ -25,13 +25,6 @@ public class SpringtimeApplication {
     @PostConstruct
     public void init() {
         // Test creating a user on startup
-        User testUser = new User("test-user");
-        userRepo.save(testUser);
-        System.out.println("Test user created successfully");
-    }
-
-    SpringtimeApplication() {
-        this.userRepo = userRepo;
     }
 
     @RequestMapping("/")
