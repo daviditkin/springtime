@@ -27,17 +27,17 @@ graph TD;
 
     subgraph "Controller Layer"
         orderController[OrderController]
-        customerController[CustomerController]
+        userController[UserController]
     end
 
     subgraph "Service Layer"
         orderService[OrderService]
-        customerService[CustomerService]
+        userService[UserService]
     end
 
     subgraph "Repository Layer"
         orderRepo[OrderRepository]
-        customerRepo[CustomerRepository]
+        userRepo[UserRepository]
     end
 
     subgraph "Database"
@@ -46,53 +46,53 @@ graph TD;
 
     subgraph "DTOs"
         orderDTO[OrderDTO]
-        customerDTO[CustomerDTO]
+        userDTO[UserDTO]
         orderResponse[OrderResponse]
-        customerResponse[CustomerResponse]
+        userResponse[UserResponse]
     end
 
     subgraph "Entities"
         orderEntity[Order Entity]
-        customerEntity[Customer Entity]
+        userEntity[User Entity]
     end
 
     subgraph "Mappers"
         orderMapper[OrderMapper]
-        customerMapper[CustomerMapper]
+        userMapper[UserMapper]
     end
 
     %% Client to Controller connections
     client -->|HTTP Request with DTO| orderController
-    client -->|HTTP Request with DTO| customerController
+    client -->|HTTP Request with DTO| userController
 
     %% Controller connections
     orderController -->|Validates & passes DTO| orderService
-    customerController -->|Validates & passes DTO| customerService
+    userController -->|Validates & passes DTO| userService
     
     %% Controller to Response connections
     orderController -->|Returns| orderResponse
-    customerController -->|Returns| customerResponse
+    userController -->|Returns| userResponse
 
     %% Service to Repository connections
     orderService -->|CRUD operations| orderRepo
-    customerService -->|CRUD operations| customerRepo
+    userService -->|CRUD operations| userRepo
 
     %% Repository to Database connections
     orderRepo -->|Persists Entities| db
-    customerRepo -->|Persists Entities| db
+    userRepo -->|Persists Entities| db
 
     %% DTO and Entity Mappings
     orderDTO -->|Mapped via| orderMapper
     orderMapper -->|Maps to/from| orderEntity
     orderMapper -->|Maps to| orderResponse
     
-    customerDTO -->|Mapped via| customerMapper
-    customerMapper -->|Maps to/from| customerEntity
-    customerMapper -->|Maps to| customerResponse
+    userDTO -->|Mapped via| userMapper
+    userMapper -->|Maps to/from| userEntity
+    userMapper -->|Maps to| userResponse
 
     %% Service Layer Mappings
     orderService -->|Uses| orderMapper
-    customerService -->|Uses| customerMapper
+    userService -->|Uses| userMapper
 ```
 
 ## Component Details
@@ -163,14 +163,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
 // DTO
 public record OrderDTO(
-    String customerName,
+    String userName,
     List<OrderItemDTO> items
 )
 
 // Response DTO
 public record OrderResponse(
     Long id,
-    String customerName,
+    String userName,
     OrderStatus status
 )
 
@@ -179,7 +179,7 @@ public record OrderResponse(
 public class Order {
     @Id @GeneratedValue
     private Long id;
-    private String customerName;
+    private String userName;
 }
 
 // Mapper
