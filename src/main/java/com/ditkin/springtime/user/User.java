@@ -2,15 +2,28 @@ package com.ditkin.springtime.user;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "the_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<Role> roles;
 
     public void setId(Long id) {
         this.id = id;
@@ -43,7 +56,25 @@ public class User {
 
      protected User() {}
 
-    public User(String name) {
+    public User(String name, String email, Set<Role> roles) {
         setName(name);
+        setEmail(email);
+        setRoles(roles);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

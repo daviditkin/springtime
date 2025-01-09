@@ -15,13 +15,17 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws Exception {
         http
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/", "/error", "/logout", "/webjars/**").permitAll()
-                        .requestMatchers("/api/v1/user/**").authenticated()
+                        .requestMatchers("/", "/error", "/logout", "/favicon.ico", "/webjars/**").permitAll()
+                        .requestMatchers("/api/v1/user/users").authenticated()
                 )
                 .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(a -> a
+                        .userInfoEndpoint(ui -> ui
+                                .userService(customOAuth2UserService))
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
