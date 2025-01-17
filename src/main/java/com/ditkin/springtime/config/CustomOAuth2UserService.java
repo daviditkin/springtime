@@ -1,9 +1,8 @@
 package com.ditkin.springtime.config;
 
-import com.ditkin.springtime.user.User;
-import com.ditkin.springtime.user.UserRepository;
+import com.ditkin.springtime.membership.User;
+import com.ditkin.springtime.membership.UserRepository;
 import org.mapstruct.ap.internal.util.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

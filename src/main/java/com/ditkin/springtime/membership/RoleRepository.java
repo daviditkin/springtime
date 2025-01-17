@@ -1,4 +1,4 @@
-package com.ditkin.springtime.user;
+package com.ditkin.springtime.membership;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,22 +1,17 @@
-package com.ditkin.springtime.user;
+package com.ditkin.springtime.membership;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
-import static java.util.Collections.EMPTY_SET;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -43,6 +38,8 @@ public class UserController {
 
     @RequestMapping("/users")
     public List<String> getUserNames(@AuthenticationPrincipal DefaultOAuth2User principal) {
+        Executor executor = Executors.newSingleThreadExecutor();
+        String foo = "fthis";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             System.out.println(authentication.getPrincipal());
